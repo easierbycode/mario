@@ -5,4 +5,5 @@ export interface ICollectibleConstructor {
   y: number;
   texture: string;
   frame?: string | number;
+  animated?: boolean;
 }

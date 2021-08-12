@@ -5,12 +5,14 @@ import Phaser from 'phaser'
 import { Mario } from '~/objects/mario'
 import { Portal } from '~/objects/portal'
 import animationJSON from '~/assets/animations/animations.json'
+import { Collectible } from '~/objects/collectible'
 
 
 export default class HelloWorldScene extends Phaser.Scene
 {
 
     // game objects
+    private collectibles: Phaser.GameObjects.Group;
     private groundGroup: Phaser.Physics.Arcade.StaticGroup;
     private player: Mario;
     private portals: Phaser.GameObjects.Group;
@@ -60,6 +62,15 @@ export default class HelloWorldScene extends Phaser.Scene
         this.load.image(
             'tiles-sma4', 
             require( '../assets/tiles/tiles-sma4.png' )
+        )
+        this.load.spritesheet(
+            'sma4', 
+            require( '../assets/tiles/tiles-sma4.png' ),
+            {
+                frameHeight: 16,
+                frameWidth: 16,
+                spacing: 2
+            }
         )
         this.load.image(
             'tiles-smb3-bw', 
@@ -179,6 +190,11 @@ export default class HelloWorldScene extends Phaser.Scene
             runChildUpdate: true
         });
 
+        this.collectibles = this.add.group({
+            /*classType: Collectible,*/
+            runChildUpdate: true
+          });
+
         this.loadObjectsFromTilemap();
 
         // *****************************************************************
@@ -194,6 +210,14 @@ export default class HelloWorldScene extends Phaser.Scene
             null,
             this
         );
+
+        this.physics.add.overlap(
+            this.player,
+            this.collectibles,
+            this.handlePlayerCollectiblesOverlap,
+            null,
+            this
+          );
 
         // *****************************************************************
         // CAMERA
@@ -291,6 +315,19 @@ export default class HelloWorldScene extends Phaser.Scene
                 });
             }
 
+            if (object.type === 'collectible') {
+                this.collectibles.add(
+                    new Collectible({
+                        animated: object.properties.animated,
+                        scene: this,
+                        x: object.x,
+                        y: object.y,
+                        texture: object.properties.kindOfCollectible,
+                        points: 100
+                    })
+                );
+            }
+
             if (
                 object.type === Constants.OBJECT_TYPES.image || 
                 object.type === Constants.OBJECT_TYPES.static || 
@@ -344,6 +381,28 @@ export default class HelloWorldScene extends Phaser.Scene
         object.properties   = propertiesFormatted
     }
 
+    private handlePlayerCollectiblesOverlap(
+        _player: Mario,
+        _collectible: Collectible
+      ): void {
+        switch (_collectible.texture.key) {
+          case 'flower': {
+            break;
+          }
+          case 'mushroom': {
+            _player.growMario();
+            break;
+          }
+          case 'star': {
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+        _collectible.collected();
+    }
+    
     private handlePlayerPortalOverlap(_player: Mario, _portal: Portal): void {
         if (
             (_player.getKeys().get('DOWN').isDown &&
@@ -368,9 +427,8 @@ export default class HelloWorldScene extends Phaser.Scene
     
     private initGlobalDataManager(): void {
         this.registry.set('level', 'levele1');
-        this.registry.set('spawn', { x: 16, y: 994, dir: 'down' })
-        // this.registry.set('spawn', { x: 176, y: 304, dir: 'down' })
-        // this.registry.set('spawn', { x: 960, y: 224, dir: 'down' })
+        // this.registry.set('spawn', { x: 16, y: 994, dir: 'down' })
+        this.registry.set('spawn', { x: 353, y: 973, dir: 'down' })
         this.registry.set('marioSize', 'small')
     }
 }
