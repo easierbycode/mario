@@ -4,9 +4,9 @@ import HelloWorldScene from './scenes/HelloWorldScene'
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
-	width: 160,
-	height: 144,
-	zoom: 5,
+	width: 384, //160,
+	height: 216, //144,
+	// zoom: 5,
 	scale: {
 		mode: Phaser.Scale.FIT,
 		autoCenter: Phaser.Scale.Center.CENTER_BOTH
@@ -19,7 +19,7 @@ const config: Phaser.Types.Core.GameConfig = {
 		}
 	},
 	scene: [HelloWorldScene],
-	render: { pixelArt: true, antialias: false },
+	render: { pixelArt: true },
 	backgroundColor: '#68c8f0'
 }
 
