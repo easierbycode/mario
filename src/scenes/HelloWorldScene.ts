@@ -52,6 +52,10 @@ export default class HelloWorldScene extends Phaser.Scene
             require( '../assets/images/a-coin-0.png' )
         )
         this.load.image(
+            'bg-level-e1', 
+            require( '../assets/images/bg-level-e1.png' )
+        )
+        this.load.image(
             'flying-goomba-0', 
             require( '../assets/images/flying-goomba-0.png' )
         )
@@ -173,6 +177,14 @@ export default class HelloWorldScene extends Phaser.Scene
             map.heightInPixels * 2,
             'metal-brick' 
         )
+        } else if (['levele1'].includes(level)) {
+            const bg   = this.add.tileSprite( 
+                0, 
+                map.heightInPixels, 
+                map.widthInPixels * 2,
+                160 * 2,
+                'bg-level-e1' 
+            )
         }
 
         const bgLayer   = map.createLayer( 'background', tileset )
