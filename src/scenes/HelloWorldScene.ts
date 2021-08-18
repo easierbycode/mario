@@ -169,8 +169,8 @@ export default class HelloWorldScene extends Phaser.Scene
         const metalBricks   = this.add.tileSprite( 
             0, 
             0, 
-            map.widthInPixels * this.scale.zoom, 
-            map.heightInPixels * this.scale.zoom, 
+            map.widthInPixels * 2,
+            map.heightInPixels * 2,
             'metal-brick' 
         )
         }
