@@ -180,6 +180,11 @@ export default class HelloWorldScene extends Phaser.Scene
         const fgLayer   = map.createLayer( 'foreground', tileset )
         fgLayer.setCollisionByProperty({ collides: true })
 
+        fgLayer.forEachTile((tile: Phaser.Tilemaps.Tile) => {
+            if (tile.properties.collidesTop) {
+                tile.setCollision(false, false, true, false);
+            }
+        })
         // *****************************************************************
         // GAME OBJECTS
         // *****************************************************************

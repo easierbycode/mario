@@ -759,6 +759,60 @@
          "tileheight":16,
          "tiles":[
                 {
+                 "id":16,
+                 "properties":[
+                        {
+                         "name":"collidesTop",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":17,
+                 "properties":[
+                        {
+                         "name":"collidesTop",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":18,
+                 "properties":[
+                        {
+                         "name":"collidesTop",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":20,
+                 "properties":[
+                        {
+                         "name":"collidesTop",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":21,
+                 "properties":[
+                        {
+                         "name":"collidesTop",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":22,
+                 "properties":[
+                        {
+                         "name":"collidesTop",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
                  "id":24,
                  "properties":[
                         {
@@ -1078,6 +1132,60 @@
                  "properties":[
                         {
                          "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":145,
+                 "properties":[
+                        {
+                         "name":"collidesTop",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":146,
+                 "properties":[
+                        {
+                         "name":"collidesTop",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":147,
+                 "properties":[
+                        {
+                         "name":"collidesTop",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":149,
+                 "properties":[
+                        {
+                         "name":"collidesTop",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":150,
+                 "properties":[
+                        {
+                         "name":"collidesTop",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":151,
+                 "properties":[
+                        {
+                         "name":"collidesTop",
                          "type":"bool",
                          "value":true
                         }]
@@ -1419,7 +1527,7 @@
                  "id":257,
                  "properties":[
                         {
-                         "name":"collides",
+                         "name":"collidesTop",
                          "type":"bool",
                          "value":true
                         }]
@@ -1428,7 +1536,7 @@
                  "id":272,
                  "properties":[
                         {
-                         "name":"collides",
+                         "name":"collidesTop",
                          "type":"bool",
                          "value":true
                         }]
@@ -1437,7 +1545,7 @@
                  "id":273,
                  "properties":[
                         {
-                         "name":"collides",
+                         "name":"collidesTop",
                          "type":"bool",
                          "value":true
                         }]
@@ -1644,7 +1752,7 @@
                  "id":510,
                  "properties":[
                         {
-                         "name":"collides",
+                         "name":"collidesTop",
                          "type":"bool",
                          "value":true
                         }]
@@ -1653,7 +1761,7 @@
                  "id":511,
                  "properties":[
                         {
-                         "name":"collides",
+                         "name":"collidesTop",
                          "type":"bool",
                          "value":true
                         }]
@@ -1662,7 +1770,7 @@
                  "id":512,
                  "properties":[
                         {
-                         "name":"collides",
+                         "name":"collidesTop",
                          "type":"bool",
                          "value":true
                         }]
