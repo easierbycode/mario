@@ -197,6 +197,14 @@ export default class HelloWorldScene extends Phaser.Scene
                 214,
                 'clouds' 
             )
+
+            const bgClouds2   = this.add.tileSprite( 
+                0, 
+                map.heightInPixels - (272 + 480 + 16 + 8), 
+                map.widthInPixels * 2,
+                214,
+                'clouds' 
+            )
         }
 
         const bgLayer   = map.createLayer( 'background', tileset )
