@@ -6,6 +6,19 @@ import { Mario } from '~/objects/mario'
 import { Portal } from '~/objects/portal'
 import animationJSON from '~/assets/animations/animations.json'
 import { Collectible } from '~/objects/collectible'
+let defaultAnimationFrames  = {
+waterfall : {
+    key: 'waterfall', 
+    frames: {
+    key: 'sma4', 
+    start: 526, 
+    end: 529,
+    typeOfGeneration: 'generateFrameNumbers'
+    },
+    frameRate: 8,
+    repeat: -1
+}
+}
 
 
 export default class HelloWorldScene extends Phaser.Scene
@@ -325,6 +338,33 @@ export default class HelloWorldScene extends Phaser.Scene
             
             if (Array.isArray(object.properties))  this.formatProperties( object )
             
+            if (object.id >= 38 && object.id <= 55) {
+                // Animated waterfall
+
+                const data  = {
+                    anims: [
+                        defaultAnimationFrames['waterfall']
+                    ]
+                }    
+                
+                let newSprite   = this.make.sprite(
+                {
+                    key     : 'sma4',
+                    frame   : 526,
+                    x       : object.x,
+                    y       : object.y,
+                    origin  : {x:0, y:1},
+                    depth   : Constants.DEPTH.foregroundMain
+                })
+
+                new AnimationHelper( 
+                    this, 
+                    data
+                )
+            
+                newSprite.play('waterfall');
+            }
+            
             if (object.type === 'portal') {
 
                 this.portals.add(
@@ -349,7 +389,7 @@ export default class HelloWorldScene extends Phaser.Scene
                     x: this.registry.get( 'spawn' ).x,
                     y: this.registry.get( 'spawn' ).y,
                     texture: 'mario'
-                });
+                }).setDepth( Constants.DEPTH.important );
             }
 
             if (object.type === 'collectible') {
