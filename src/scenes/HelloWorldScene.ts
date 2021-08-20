@@ -56,6 +56,10 @@ export default class HelloWorldScene extends Phaser.Scene
             require( '../assets/images/bg-level-e1.png' )
         )
         this.load.image(
+            'clouds', 
+            require( '../assets/images/clouds.png' )
+        )
+        this.load.image(
             'flying-goomba-0', 
             require( '../assets/images/flying-goomba-0.png' )
         )
@@ -184,6 +188,14 @@ export default class HelloWorldScene extends Phaser.Scene
                 map.widthInPixels * 2,
                 160 * 2,
                 'bg-level-e1' 
+            )
+
+            const bgClouds   = this.add.tileSprite( 
+                0, 
+                map.heightInPixels - 272, 
+                map.widthInPixels * 2,
+                214,
+                'clouds' 
             )
         }
 
@@ -444,8 +456,8 @@ export default class HelloWorldScene extends Phaser.Scene
     
     private initGlobalDataManager(): void {
         this.registry.set('level', 'levele1');
-        // this.registry.set('spawn', { x: 16, y: 994, dir: 'down' })
-        this.registry.set('spawn', { x: 353, y: 973, dir: 'down' })
+        this.registry.set('spawn', { x: 16, y: 994, dir: 'down' })
+        // this.registry.set('spawn', { x: 869, y: 994, dir: 'down' })
         this.registry.set('marioSize', 'small')
     }
 }

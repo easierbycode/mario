@@ -20,7 +20,7 @@ const config: Phaser.Types.Core.GameConfig = {
 	},
 	scene: [HelloWorldScene],
 	render: { pixelArt: true },
-	backgroundColor: '#68c8f0'
+	backgroundColor: '#80A8F8'  // '#68c8f0'
 }
 
 export default new Phaser.Game(config)
