@@ -113,6 +113,15 @@ export default class HelloWorldScene extends Phaser.Scene
         let assets  = [
             {
                 "type": "spritesheet",
+                "key": "coin-impact",
+                "url": require('../assets/sprites/coin-impact.png'),
+                "frameConfig": {
+                    "frameWidth": 20,
+                    "frameHeight": 16
+                }
+            },
+            {
+                "type": "spritesheet",
                 "key": "mario",
                 "url": require('../assets/sprites/mario.png'),
                 "frameConfig": {

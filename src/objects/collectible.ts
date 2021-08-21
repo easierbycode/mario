@@ -38,6 +38,16 @@ export class Collectible extends Phaser.GameObjects.Sprite {
     this.currentScene.add.existing(this);
   }
 
+  // when collected, play coin impact animation
+  //  - destroy when animation complete
+  private destroy() {
+    this.on('animationcomplete-coin-impact', () => {
+      super.destroy()
+    })
+
+    this.play( 'coin-impact' )
+  }
+
   private initSprite() {
     // sprite
     this.setOrigin(0, 0);
