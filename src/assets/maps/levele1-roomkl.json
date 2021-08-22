@@ -56,6 +56,90 @@
                  "width":32,
                  "x":32,
                  "y":63
+                }, 
+                {
+                 "gid":1077,
+                 "height":27,
+                 "id":6,
+                 "name":"turtle-red",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":208,
+                 "y":464
+                }, 
+                {
+                 "gid":1077,
+                 "height":27,
+                 "id":7,
+                 "name":"turtle-red",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":176,
+                 "y":432
+                }, 
+                {
+                 "gid":1077,
+                 "height":27,
+                 "id":8,
+                 "name":"turtle-red",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":144,
+                 "y":400
+                }, 
+                {
+                 "gid":1077,
+                 "height":27,
+                 "id":9,
+                 "name":"turtle-red",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":112,
+                 "y":368
+                }, 
+                {
+                 "gid":1077,
+                 "height":27,
+                 "id":10,
+                 "name":"turtle-red",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":80,
+                 "y":336
+                }, 
+                {
+                 "gid":1077,
+                 "height":27,
+                 "id":11,
+                 "name":"turtle-red",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":48,
+                 "y":304
+                }, 
+                {
+                 "gid":1077,
+                 "height":27,
+                 "id":12,
+                 "name":"turtle-red",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":16,
+                 "y":272
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -92,7 +176,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":6,
+ "nextobjectid":14,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.1",
@@ -1078,13 +1162,19 @@
          "margin":0,
          "name":"common",
          "spacing":0,
-         "tilecount":1,
-         "tileheight":25,
+         "tilecount":2,
+         "tileheight":27,
          "tiles":[
                 {
                  "id":0,
                  "image":"..\/images\/a-coin-0.png",
                  "imageheight":25,
+                 "imagewidth":16
+                }, 
+                {
+                 "id":1,
+                 "image":"..\/images\/turtle-red-0.png",
+                 "imageheight":27,
                  "imagewidth":16
                 }],
          "tilewidth":16

@@ -6,6 +6,8 @@ import { Mario } from '~/objects/mario'
 import { Portal } from '~/objects/portal'
 import animationJSON from '~/assets/animations/animations.json'
 import { Collectible } from '~/objects/collectible'
+import { Turtle } from '~/objects/turtle'
+
 let defaultAnimationFrames  = {
 waterfall : {
     key: 'waterfall', 
@@ -127,6 +129,15 @@ export default class HelloWorldScene extends Phaser.Scene
                 "frameConfig": {
                     "frameWidth": 16,
                     "frameHeight": 16
+                }
+            },
+            {
+                "type": "spritesheet",
+                "key": "turtle-red",
+                "url": require('../assets/sprites/turtle-red.png'),
+                "frameConfig": {
+                    "frameWidth": 18,
+                    "frameHeight": 27
                 }
             }
         ]
@@ -254,6 +265,9 @@ export default class HelloWorldScene extends Phaser.Scene
             runChildUpdate: true
           });
 
+        this.enemies = this.add.group({
+            runChildUpdate: true
+        });
         this.loadObjectsFromTilemap();
 
         // *****************************************************************
@@ -262,6 +276,13 @@ export default class HelloWorldScene extends Phaser.Scene
         this.physics.add.collider(this.player, this.groundGroup);
         this.physics.add.collider(this.player, fgLayer);
 
+        this.physics.add.collider(
+            this.enemies,
+            fgLayer,
+            this.patrolPlatform,
+            null,
+            this
+        );
         this.physics.add.overlap(
             this.player,
             this.portals,
@@ -372,6 +393,12 @@ export default class HelloWorldScene extends Phaser.Scene
                 )
             
                 newSprite.play('waterfall');
+            }
+            
+            if (object.name === 'turtle-red') {
+                this.enemies.add(
+                    new Turtle({x: object.x, y: object.y, scene: this, texture: 'turtle-red'})
+                )
             }
             
             if (object.type === 'portal') {
@@ -516,5 +543,49 @@ export default class HelloWorldScene extends Phaser.Scene
         this.registry.set('spawn', { x: 16, y: 994, dir: 'down' })
         // this.registry.set('spawn', { x: 869, y: 994, dir: 'down' })
         this.registry.set('marioSize', 'small')
+    }
+
+    private patrolPlatform(enemy, platform) {
+        // if enemy moving to right and has started to move over right edge of platform
+        if (enemy.body.velocity.x > 0 && enemy.body.center.x > platform.right) {
+
+            // check to see if next tile to the right collides
+            let nextTileCollides    = this.map.findTile(
+                t => t.collides,
+                this,
+                platform.x + 1,
+                platform.y,
+                1,
+                1
+            )
+            // if so, do nothing
+            if (nextTileCollides) {
+
+            // if tile does not collide, reverse direction (because if we keep going we will fall)
+            } else {
+                enemy.speed *= -1
+            }
+        }
+        
+        // else if enemy moving to left and has started to move over left edge of platform
+        else if (enemy.body.velocity.x < 0 && enemy.body.center.x < platform.pixelX) {
+            
+            // check to see if next tile to the left collides
+            let nextTileCollides    = this.map.findTile(
+                t => t.collides,
+                this,
+                platform.x - 1,
+                platform.y,
+                1,
+                1
+            )
+            // if so, do nothing
+            if (nextTileCollides) {
+
+            // if tile does not collide, reverse direction (because if we keep going we will fall)
+            } else {
+                enemy.speed *= -1
+            }
+        }
     }
 }
