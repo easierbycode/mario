@@ -287,7 +287,7 @@ export default class HelloWorldScene extends Phaser.Scene
             this.player,
             this.portals,
             this.handlePlayerPortalOverlap,
-            null,
+            () => this.player.body.onFloor(),
             this
         );
 
