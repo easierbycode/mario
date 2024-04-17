@@ -1,4 +1,4 @@
-import { ISpriteConstructor } from '../interfaces/sprite.interface';
+import { ISpriteConstructor } from "../interfaces/sprite.interface";
 
 export class Mario extends Phaser.GameObjects.Sprite {
   body: Phaser.Physics.Arcade.Body;
@@ -33,8 +33,8 @@ export class Mario extends Phaser.GameObjects.Sprite {
 
   private initSprite() {
     // variables
-    this.marioSize = this.currentScene.registry.get('marioSize');
-    this.acceleration = 500;
+    this.marioSize = this.currentScene.registry.get("marioSize");
+    this.acceleration = 0; //500;
     this.isJumping = false;
     this.isDying = false;
     this.isVulnerable = true;
@@ -46,12 +46,18 @@ export class Mario extends Phaser.GameObjects.Sprite {
 
     // input
     this.keys = new Map([
-      ['LEFT', this.addKey('A')],
-      ['RIGHT', this.addKey('D')],
-      ['UP', this.addKey('W')],
-      ['DOWN', this.addKey('S')],
-      ['JUMP', this.addKey('SPACE')]
+      ["LEFT", this.addKey("A")],
+      ["RIGHT", this.addKey("D")],
+      ["UP", this.addKey("W")],
+      ["DOWN", this.addKey("S")],
+      ["JUMP", this.addKey("SPACE")],
+      ["RUN", this.addKey("C")],
+      ["SELECT", this.addKey("ENTER")],
     ]);
+
+    this.keys.get("SELECT").on("down", () => {
+      document.location.reload();
+    });
 
     // physics
     this.currentScene.physics.world.enable(this);
@@ -65,17 +71,23 @@ export class Mario extends Phaser.GameObjects.Sprite {
     return this.currentScene.input.keyboard.addKey(key);
   }
 
-  update(): void {
+  private getTimeScale(delta: number): number {
+    // return 1 / (delta / 16.666);
+    // return delta / (1.0 / 60.0)
+    return delta / (1000 / 60);
+  }
+
+  update(time: number, delta: number): void {
     if (!this.isDying) {
-      this.handleInput();
+      this.handleInput(delta);
       this.handleAnimations();
     } else {
       this.setFrame(12);
-    //   if (this.y > this.currentScene.sys.canvas.height) {
-    //     this.currentScene.scene.stop('GameScene');
-    //     this.currentScene.scene.stop('HUDScene');
-    //     this.currentScene.scene.start('MenuScene');
-    //   }
+      //   if (this.y > this.currentScene.sys.canvas.height) {
+      //     this.currentScene.scene.stop('GameScene');
+      //     this.currentScene.scene.stop('HUDScene');
+      //     this.currentScene.scene.start('MenuScene');
+      //   }
     }
 
     if (!this.isVulnerable) {
@@ -88,50 +100,120 @@ export class Mario extends Phaser.GameObjects.Sprite {
     }
   }
 
-  private handleInput() {
-    // if (this.y > this.currentScene.sys.canvas.height) {
-    //   // mario fell into a hole
-        // this.isDying = true;
+  private handleInput(delta: number) {
+    const ACCELERATION = 3.28125;
+    const DECELERATION = 3.28125;
+    const SKID_DECELERATION = 7.5;
+    let JUMP_VELOCITY = -206.25;
+
+    if (this.keys.get("RIGHT").isDown || this.keys.get("LEFT").isDown) {
+      if (this.keys.get("RUN").isDown) {
+        this.body.maxVelocity.x = 210; //150;
+      } else {
+        this.body.maxVelocity.x = 90;
+      }
+    } else {
+      this.body.maxVelocity.x = 90;
+    }
+    // if (this.keys.get("RUN").isDown) {
+    //   this.body.maxVelocity.x = 150;
+    // } else {
+    //   this.body.maxVelocity.x = 90;
     // }
+
+    // if (this.y > this.currentScene.sys.canvas.height) {
+    if (this.y > this.currentScene.map.heightInPixels) {
+      // mario fell into a hole
+      this.isDying = true;
+    }
 
     // evaluate if player is on the floor or on object
     // if neither of that, set the player to be jumping
-    // if (
-    //   this.body.onFloor() ||
-    //   this.body.touching.down ||
-    //   this.body.blocked.down
-    // ) {
-    //   this.isJumping = false;
+    if (
+      this.body.onFloor() ||
+      this.body.touching.down ||
+      this.body.blocked.down
+    ) {
       this.isJumping = false;
-    //   //this.body.setVelocityY(0);
-    // }
+      this.body.setVelocityY(0);
+    }
+
+    let velocity = this.body.velocity.x;
 
     // handle movements to left and right
-    if (this.keys.get('RIGHT').isDown) {
+    if (this.keys.get("RIGHT").isDown) {
+      if (this.acceleration < this.body.maxVelocity.x) {
+        this.acceleration += ACCELERATION * this.getTimeScale(delta);
+        if (this.acceleration > this.body.maxVelocity.x)
+          this.acceleration = this.body.maxVelocity.x;
+      }
+
       this.body.setAccelerationX(this.acceleration);
       this.setFlipX(false);
-    } else if (this.keys.get('LEFT').isDown) {
+    } else if (this.keys.get("LEFT").isDown) {
+      if (this.acceleration < this.body.maxVelocity.x) {
+        this.acceleration += ACCELERATION * this.getTimeScale(delta);
+        if (this.acceleration > this.body.maxVelocity.x)
+          this.acceleration = this.body.maxVelocity.x;
+      }
+
       this.body.setAccelerationX(-this.acceleration);
       this.setFlipX(true);
     } else {
-      this.body.setVelocityX(0);
-      this.body.setAccelerationX(0);
+      if (this.acceleration !== 0) {
+        this.acceleration -= DECELERATION * this.getTimeScale(delta);
+        if (this.acceleration < 0) this.acceleration = 0;
+      }
+
+      let decel = DECELERATION * this.getTimeScale(delta);
+
+      if (
+        (this.body.velocity.x < 0 && this.body.acceleration.x > 0) ||
+        (this.body.velocity.x > 0 && this.body.acceleration.x < 0)
+      ) {
+        decel = SKID_DECELERATION * this.getTimeScale(delta);
+      }
+
+      if (this.flipX) {
+        velocity += decel;
+        if (velocity > 0) velocity = 0;
+        this.body.setVelocityX(velocity);
+        this.body.setAccelerationX(-this.acceleration);
+      } else {
+        velocity -= decel;
+        if (velocity < 0) velocity = 0;
+        this.body.setVelocityX(velocity);
+        this.body.setAccelerationX(this.acceleration);
+      }
     }
 
     // handle jumping
-    if (this.keys.get('JUMP').isDown && !this.isJumping) {
-      this.body.setVelocityY(-180);
+    if (this.keys.get("JUMP").isDown && !this.isJumping) {
+      if (Math.abs(velocity) > 180) {
+        JUMP_VELOCITY = -236.25;
+      } else if (Math.abs(velocity) > 120) {
+        JUMP_VELOCITY = -221.25;
+      } else if (Math.abs(velocity) > 60) {
+        JUMP_VELOCITY = -213.75;
+      } else {
+        JUMP_VELOCITY = -206.25;
+      }
+
+      // this.body.setVelocityY(-180);
+      this.body.setVelocityY(JUMP_VELOCITY);
       this.isJumping = true;
     }
   }
 
   private handleAnimations(): void {
-    if (this.isDying)  return;
+    const SKID_TURNAROUND_X_SPEED = 33.75;
+
+    if (this.isDying) return;
 
     if (this.body.velocity.y !== 0) {
       // mario is jumping or falling
       this.anims.stop();
-      if (this.marioSize === 'small') {
+      if (this.marioSize === "small") {
         this.setFrame(4);
       } else {
         this.setFrame(10);
@@ -141,10 +223,11 @@ export class Mario extends Phaser.GameObjects.Sprite {
 
       // check if mario is making a quick direction change
       if (
-        (this.body.velocity.x < 0 && this.body.acceleration.x > 0) ||
-        (this.body.velocity.x > 0 && this.body.acceleration.x < 0)
+        ((this.body.velocity.x < 0 && this.body.acceleration.x > 0) ||
+          (this.body.velocity.x > 0 && this.body.acceleration.x < 0)) &&
+        Math.abs(this.body.velocity.x) > SKID_TURNAROUND_X_SPEED
       ) {
-        if (this.marioSize === 'small') {
+        if (this.marioSize === "small") {
           this.setFrame(5);
         } else {
           this.setFrame(11);
@@ -152,17 +235,17 @@ export class Mario extends Phaser.GameObjects.Sprite {
       }
 
       if (this.body.velocity.x > 0) {
-        this.anims.play(this.marioSize + 'MarioWalk', true);
+        this.anims.play(this.marioSize + "MarioWalk", true);
       } else {
-        this.anims.play(this.marioSize + 'MarioWalk', true);
+        this.anims.play(this.marioSize + "MarioWalk", true);
       }
     } else {
       // mario is standing still
       this.anims.stop();
-      if (this.marioSize === 'small') {
+      if (this.marioSize === "small") {
         this.setFrame(0);
       } else {
-        if (this.keys.get('DOWN').isDown) {
+        if (this.keys.get("DOWN").isDown) {
           this.setFrame(13);
         } else {
           this.setFrame(6);
@@ -172,14 +255,14 @@ export class Mario extends Phaser.GameObjects.Sprite {
   }
 
   public growMario(): void {
-    this.marioSize = 'big';
-    this.currentScene.registry.set('marioSize', 'big');
+    this.marioSize = "big";
+    this.currentScene.registry.set("marioSize", "big");
     this.adjustPhysicBodyToBigSize();
   }
 
   private shrinkMario(): void {
-    this.marioSize = 'small';
-    this.currentScene.registry.set('marioSize', 'small');
+    this.marioSize = "small";
+    this.currentScene.registry.set("marioSize", "small");
     this.adjustPhysicBodyToSmallSize();
   }
 
@@ -198,14 +281,14 @@ export class Mario extends Phaser.GameObjects.Sprite {
       targets: this,
       props: { y: this.y - 5 },
       duration: 200,
-      ease: 'Power1',
-      yoyo: true
+      ease: "Power1",
+      yoyo: true,
     });
   }
 
   public gotHit(): void {
     this.isVulnerable = false;
-    if (this.marioSize === 'big') {
+    if (this.marioSize === "big") {
       this.shrinkMario();
     } else {
       // mario is dying

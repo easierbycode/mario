@@ -471,12 +471,12 @@ export default class HelloWorldScene extends Phaser.Scene
         this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(controlConfig)
     }
 
-    update(): void
+    update(time: number, delta: number): void
     {
         if (this.controls)  this.controls.update()
 
         if (this.player) {
-            this.player.update();
+            this.player.update(time, delta);
 
             // WORLD WRAP
             if (['levele1RoomKL'].includes(this.currentLevel)) {
