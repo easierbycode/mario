@@ -1,3 +1,4 @@
+import Phaser from 'phaser'
 import { AnimationHelper } from '~/helpers/animation-helper';
 import { ICollectibleConstructor } from '../interfaces/collectible.interface';
 

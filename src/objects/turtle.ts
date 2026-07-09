@@ -1,3 +1,4 @@
+import Phaser from 'phaser'
 import { ISpriteConstructor } from "~/interfaces/sprite.interface";
 
 class Enemy extends Phaser.GameObjects.Sprite {

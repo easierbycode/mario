@@ -1,3 +1,4 @@
+import Phaser from 'phaser'
 import { Collectible } from './collectible';
 import { IBoxConstructor } from '../interfaces/box.interface';
 

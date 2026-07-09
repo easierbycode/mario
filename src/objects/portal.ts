@@ -1,3 +1,4 @@
+import Phaser from 'phaser'
 import { IPortalConstructor } from '../interfaces/portal.interface';
 import { IPortalDestination } from '../interfaces/portal-destination.interface';
 

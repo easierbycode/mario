@@ -8,6 +8,28 @@ import animationJSON from '~/assets/animations/animations.json'
 import { Collectible } from '~/objects/collectible'
 import { Turtle } from '~/objects/turtle'
 
+import aCoin0Png from '../assets/images/a-coin-0.png'
+import bgLevelE1Png from '../assets/images/bg-level-e1.png'
+import cloudsPng from '../assets/images/clouds.png'
+import flyingGoomba0Png from '../assets/images/flying-goomba-0.png'
+import metalBrickPng from '../assets/images/metal-brick.png'
+import skylineBuildingsPng from '../assets/images/skyline-buildings.png'
+import watersidePng from '../assets/images/waterside.png'
+import tilesSma4Png from '../assets/tiles/tiles-sma4.png'
+import tilesSmb3BwPng from '../assets/tiles/tiles-smb3-bw.png'
+import tilesSweetsPng from '../assets/tiles/tiles-sweets.png'
+import coinImpactPng from '../assets/sprites/coin-impact.png'
+import marioPng from '../assets/sprites/mario.png'
+import turtleRedPng from '../assets/sprites/turtle-red.png'
+import levele1JSON from '../assets/maps/levele1.json'
+import levele1RoomABJSON from '../assets/maps/levele1-roomab.json'
+import levele1RoomCJSON from '../assets/maps/levele1-roomc.json'
+import levele1RoomDEFJSON from '../assets/maps/levele1-roomdef.json'
+import levele1RoomGHIJKJSON from '../assets/maps/levele1-roomghijk.json'
+import levele1RoomHMJSON from '../assets/maps/levele1-roomhm.json'
+import levele1RoomKLJSON from '../assets/maps/levele1-roomkl.json'
+import levele1RoomOJSON from '../assets/maps/levele1-roomo.json'
+
 let defaultAnimationFrames  = {
 waterfall : {
     key: 'waterfall', 
@@ -63,32 +85,32 @@ export default class HelloWorldScene extends Phaser.Scene
         )
 
         this.load.image(
-            'a-coin-0', 
-            require( '../assets/images/a-coin-0.png' )
+            'a-coin-0',
+            aCoin0Png
         )
         this.load.image(
-            'bg-level-e1', 
-            require( '../assets/images/bg-level-e1.png' )
+            'bg-level-e1',
+            bgLevelE1Png
         )
         this.load.image(
-            'clouds', 
-            require( '../assets/images/clouds.png' )
+            'clouds',
+            cloudsPng
         )
         this.load.image(
-            'flying-goomba-0', 
-            require( '../assets/images/flying-goomba-0.png' )
+            'flying-goomba-0',
+            flyingGoomba0Png
         )
         this.load.image(
             'metal-brick',
-            require( '../assets/images/metal-brick.png' )
+            metalBrickPng
         )
         this.load.image(
-            'tiles-sma4', 
-            require( '../assets/tiles/tiles-sma4.png' )
+            'tiles-sma4',
+            tilesSma4Png
         )
         this.load.spritesheet(
-            'sma4', 
-            require( '../assets/tiles/tiles-sma4.png' ),
+            'sma4',
+            tilesSma4Png,
             {
                 frameHeight: 16,
                 frameWidth: 16,
@@ -96,27 +118,27 @@ export default class HelloWorldScene extends Phaser.Scene
             }
         )
         this.load.image(
-            'tiles-smb3-bw', 
-            require( '../assets/tiles/tiles-smb3-bw.png' )
+            'tiles-smb3-bw',
+            tilesSmb3BwPng
         )
         this.load.image(
-            'tiles-sweets', 
-            require( '../assets/tiles/tiles-sweets.png' )
+            'tiles-sweets',
+            tilesSweetsPng
         )
         this.load.image(
-            'skyline-buildings', 
-            require( '../assets/images/skyline-buildings.png' )
+            'skyline-buildings',
+            skylineBuildingsPng
         )
         this.load.image(
-            'waterside', 
-            require( '../assets/images/waterside.png' )
+            'waterside',
+            watersidePng
         )
 
         let assets  = [
             {
                 "type": "spritesheet",
                 "key": "coin-impact",
-                "url": require('../assets/sprites/coin-impact.png'),
+                "url": coinImpactPng,
                 "frameConfig": {
                     "frameWidth": 20,
                     "frameHeight": 16
@@ -125,7 +147,7 @@ export default class HelloWorldScene extends Phaser.Scene
             {
                 "type": "spritesheet",
                 "key": "mario",
-                "url": require('../assets/sprites/mario.png'),
+                "url": marioPng,
                 "frameConfig": {
                     "frameWidth": 16,
                     "frameHeight": 16
@@ -134,7 +156,7 @@ export default class HelloWorldScene extends Phaser.Scene
             {
                 "type": "spritesheet",
                 "key": "turtle-red",
-                "url": require('../assets/sprites/turtle-red.png'),
+                "url": turtleRedPng,
                 "frameConfig": {
                     "frameWidth": 18,
                     "frameHeight": 27
@@ -146,44 +168,42 @@ export default class HelloWorldScene extends Phaser.Scene
 
         this.load.tilemapTiledJSON(
             'levele1',
-            // require( '../assets/maps/level1.json' )
-            // require( '../assets/maps/level2.json' )
-            require( '../assets/maps/levele1.json' )
+            levele1JSON
         )
 
         this.load.tilemapTiledJSON(
             'levele1RoomAB',
-            require( '../assets/maps/levele1-roomab.json' )
+            levele1RoomABJSON
         )
 
         this.load.tilemapTiledJSON(
             'levele1RoomC',
-            require( '../assets/maps/levele1-roomc.json' )
+            levele1RoomCJSON
         )
 
         this.load.tilemapTiledJSON(
             'levele1RoomDEF',
-            require( '../assets/maps/levele1-roomdef.json' )
+            levele1RoomDEFJSON
         )
 
         this.load.tilemapTiledJSON(
             'levele1RoomGHIJK',
-            require( '../assets/maps/levele1-roomghijk.json' )
+            levele1RoomGHIJKJSON
         )
 
         this.load.tilemapTiledJSON(
             'levele1RoomHM',
-            require( '../assets/maps/levele1-roomhm.json' )
+            levele1RoomHMJSON
         )
 
         this.load.tilemapTiledJSON(
             'levele1RoomKL',
-            require( '../assets/maps/levele1-roomkl.json' )
+            levele1RoomKLJSON
         )
 
         this.load.tilemapTiledJSON(
             'levele1RoomO',
-            require( '../assets/maps/levele1-roomo.json' )
+            levele1RoomOJSON
         )
     }
 
